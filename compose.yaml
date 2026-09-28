@@ -1,0 +1,38 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: catalogo_app
+
+    working_dir: /var/www
+
+    volumes:
+      - ./backend:/var/www
+
+    ports:
+      - "8000:8000"
+
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:17
+
+    container_name: catalogo_postgres
+
+    environment:
+      POSTGRES_DB: catalogo
+      POSTGRES_USER: catalogo
+      POSTGRES_PASSWORD: catalogo
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
